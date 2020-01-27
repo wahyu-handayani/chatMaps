@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "635016769630",
+    "firebase_url": "https://chatmaps-265816.firebaseio.com",
+    "project_id": "chatmaps-265816",
+    "storage_bucket": "chatmaps-265816.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635016769630:android:e3f567d8cdfc235c5804cf",
+        "android_client_info": {
+          "package_name": "com.chatmaps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635016769630-7dlufbq32b0ilm2v8v03q7fi9jh15kvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAAhOfZbzz3847SQm_Fzh51xKXY2pnjoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635016769630-7dlufbq32b0ilm2v8v03q7fi9jh15kvf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
