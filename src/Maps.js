@@ -16,7 +16,9 @@ import firebase from './config'
 import { withNavigation } from 'react-navigation'
 import Geolocation from 'react-native-geolocation-service';
 import permission from './Permission';
-import pin from './img/pin.png'
+import pin from './img/marker.png'
+import pin2 from './img/marker2.png'
+import User from './User';
 let { width, height } = Dimensions.get('window');
 // import SideBar from './Sidebar';
 
@@ -56,6 +58,7 @@ export default class Register extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this._getDataFriends(user.uid)
+        
         Geolocation.getCurrentPosition(
           position => {
             this.setState({
@@ -66,6 +69,7 @@ export default class Register extends React.Component {
                 longitudeDelta: LONGITUDE_DELTA,
               }
             });
+            console.log(this.state.region,'HKHKKKHK')
             this._updateLocation(user.uid, position.coords)
           },
           (error) => console.warn(error.message),
@@ -84,6 +88,7 @@ export default class Register extends React.Component {
           }
 
         );
+        console.log(user.uid===User.uid,'fhuuuuuuuuuuuuuuuuuuuuuuuuuuuuu')
       }
 
     })
@@ -91,6 +96,16 @@ export default class Register extends React.Component {
   _getDataFriends = (uid) => {
     firebase.database().ref('users/').on('child_added', (result) => {
       let person = result.val();
+      console.log(person,person.uid===User.uid,'PERSOOOOOOOOOOOOOOOOOOOOOOOOOOOOON')
+      console.log(result.val().uid,'HUUFFFFFFFFF')
+      User.region=person.region
+      // if(person.uid===User.uid) {
+      //   User.region=result.val().region
+      // console.log(User.region,'BISMILLAH')
+      // }
+      
+      // let position=person.uid===User.uid?User.region=person.region:'SALAH'
+      // console.log(position,'SSAAAAAAAAAAAAAAAAAAAAAA')
       person.uid = result.key;
       if (person.uid !== uid) {
         this.setState((prevState) => {
@@ -122,6 +137,7 @@ export default class Register extends React.Component {
     this.setState({ isMapReady: true });
   }
   render() {
+    console.log(User.region,'GJGJJGJJ')
     return (
       // <Drawer
       //   ref={(ref) => { this._drawer = ref; }}
@@ -159,7 +175,7 @@ export default class Register extends React.Component {
           <MapView.Marker
             title="Anda"
             description={this.state.mystatus}
-            // image={pinkflag}
+            image={pin2}
             coordinate={this.state.region}
           />
 

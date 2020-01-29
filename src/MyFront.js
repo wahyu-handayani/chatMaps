@@ -30,7 +30,8 @@ export default class MyFront extends Component {
         // console.log(uid,'fffffffffffffffffff')
         console.log(response, 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
         console.log(response.user.uid, 'lllllllllllll')
-        firebase.database().ref('users/' + response.user.uid).set({ email: this.state.email, name: this.state.name, uid: response.user.uid })
+        firebase.database().ref('users/' + response.user.uid).set({ image:User.image,email: this.state.email, name: this.state.name, uid: response.user.uid })
+        console.log(User.image, 'OOOOOOOOOOOOO@@@')
         // console.log(this.state.email)
         // setTimeout(() => {
         //             this.props.navigation.navigate({
