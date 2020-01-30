@@ -7,17 +7,18 @@ import {
 
 import { Item, Input, Button } from 'native-base'
 import firebase from './config'
+import Firebase from 'firebase'
 import User from './User'
 import Toast, { DURATION } from 'react-native-easy-toast'
 
 export default class MyFront extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', password: '', error: '', loading: false };
+    this.state = { name: '', email: '', password: '', error: '', loading: false,image:'' };
 
   }
 
-  onLoginPress() {
+  onLoginPress(){
     this.setState({ error: '', loading: true });
     // console.ignoredYellowBox = ['Setting a timer'];
     console.disableYellowBox = true;
@@ -26,11 +27,12 @@ export default class MyFront extends Component {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(response => {
         this.setState({ error: '', loading: false });
-        // const uid=firebase.getAuth().getUid()
-        // console.log(uid,'fffffffffffffffffff')
         console.log(response, 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
+        console.log(response.user.photoURL, '&&&&&&&&&&&&&&&&&&&')
+        console.log(response.user,'9999999999999')
+        console.log(response.user.email, '*****')
         console.log(response.user.uid, 'lllllllllllll')
-        firebase.database().ref('users/' + response.user.uid).set({ image:User.image,email: this.state.email, name: this.state.name, uid: response.user.uid })
+        // firebase.database().ref('users/' + response.user.uid).set({ image:response.user.image,email: this.state.email, name: this.state.name, uid: response.user.uid })
         console.log(User.image, 'OOOOOOOOOOOOO@@@')
         // console.log(this.state.email)
         // setTimeout(() => {
@@ -38,9 +40,16 @@ export default class MyFront extends Component {
         //                 id: 'Home'
         //             })
         //         }, 1500)
-        User.email = this.state.email
+        Firebase.database().ref('users').child(response.user.uid)
+          .once('value', function(snapshot){
+            if (snapshot.hasChild('image') == false) {
+              User.image = null
+            } else console.log(snapshot.hasChild('image'),snapshot.val(),'???????????????')
+          })
+        User.email =this.state.email
         User.name = this.state.name
         User.uid = response.user.uid
+        // User.image=response.user.image
         this.props.navigation.navigate('Maps');
 
       })
@@ -62,8 +71,10 @@ export default class MyFront extends Component {
 
     const { name, email, password } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(() => {
+      .then(response => {
         this.setState({ error: '', loading: false });
+        firebase.database().ref('users/' + response.user.uid).set({email: this.state.email, name: this.state.name, uid: response.user.uid })
+        
         Alert.alert("regis SUKSES :'D")
         this.props.navigation.navigate('Login');
       })

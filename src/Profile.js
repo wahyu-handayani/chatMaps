@@ -48,6 +48,9 @@ export default class Profile extends Component {
 
     updateUser=()=>{
         firebase.database().ref('users').child(User.uid).set(User)
+        // const ref = firebase.storage().ref('profile_pictures/aa@gmail.com.png');
+        // const url = ref.getDownloadUrl();
+        // console.log(url,'5555555555555555')
         alert('sukses tersimpan')
     }
 
@@ -62,12 +65,19 @@ export default class Profile extends Component {
         firebase.storage().ref(`profile_pictures/${User.email}.png`)
         .put(file)
         .then(snapshot=>snapshot.ref.getDownloadURL())
-        .then(url=>this.updateUserImage(url))
+        .then(url=>{
+            console.log(url,'wwwwwwwwwwwwwwwww33')
+            this.updateUserImage(url)
+        })
         .catch(error=>{
             this.setState({
                 upload:false,imageSource:require('./sukses.jpg')
             })
+            // const ref = firebase.storage().ref('profile_pictures/aa@gmail.com.png');
+        // const url = ref.getDownloadUrl();
+        // console.log(ref,'5555555555555555')
             alert('err upload')
+            
         })
     }
     uriToBlob=(uri)=>{
@@ -113,7 +123,7 @@ export default class Profile extends Component {
                 <Button
                     onPress={this.changeName}
                     style={{ marginLeft: 31, backgroundColor:'transparent',borderStyle:'solid',borderColor:'skyblue',borderWidth:2, borderRadius: 10, height: 50, marginBottom: 20, width: 300 }}>
-                    <Text style={{ fontSize: 15, marginLeft: 140 }}>Edit</Text>
+                    <Text style={{ fontSize: 15, marginLeft: 140 }}>Save</Text>
                 </Button>
 
             </View>
