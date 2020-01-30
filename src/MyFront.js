@@ -44,7 +44,11 @@ export default class MyFront extends Component {
           .once('value', function(snapshot){
             if (snapshot.hasChild('image') == false) {
               User.image = null
-            } else console.log(snapshot.hasChild('image'),snapshot.val(),'???????????????')
+            } else {
+              const value=snapshot.val()
+              console.log(snapshot.hasChild('image'),value.image,'XX1')
+              User.image=value.image
+            }
           })
         User.email =this.state.email
         User.name = this.state.name

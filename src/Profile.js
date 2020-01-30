@@ -56,7 +56,7 @@ export default class Profile extends Component {
 
     updateUserImage=(img)=>{
         User.image=img
-        console.log(User.image,'IMGGGGGGG')
+        console.log(User.image,'5IMGGGGGGG')
         this.updateUser()
         this.setState({upload:false,imageSource:{uri:img}})
     }
