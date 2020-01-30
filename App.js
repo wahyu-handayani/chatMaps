@@ -140,12 +140,12 @@ const Peta = createStackNavigator(
   
   const Router = createSwitchNavigator(
     {
-      RouteUser,Front
+      RouteUser,Front,Peta
     },
     {
       headerMode: 'none',
-      // initialRouteName: coba()?'Peta':'Front',
-      initialRouteName: 'Front', 
+      initialRouteName: coba()?'Peta':'Front',
+      // initialRouteName: 'Front', 
     },
   );
   
