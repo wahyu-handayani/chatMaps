@@ -101,11 +101,15 @@ export default class Chat extends Component {
         return (
             <View>
                 <Header style={styles.header}>
-
+                 <Left>
+               <Button transparent onPress={() => {this.props.navigation.navigate('Kontak')}}>
+                 <Icon name='ios-arrow-back' style={{color: 'blue'}}/>
+               </Button>
+             </Left>
                     <Body>
                         <Title style={styles.titleHeader}>My Chat</Title>
                     </Body>
-
+                    <Right/>
                 </Header>
                 <ScrollView>
                     <FlatList
@@ -157,7 +161,7 @@ const styles = StyleSheet.create({
     titleHeader: {
       color: 'blue',
       fontSize: 18,
-      marginLeft:130
+      marginLeft:70
     },
   })
   

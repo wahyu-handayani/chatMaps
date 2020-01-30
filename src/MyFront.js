@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Alert
 
 } from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { Item, Input, Button } from 'native-base'
 import firebase from './config'
@@ -28,10 +28,6 @@ export default class MyFront extends Component {
       .then(response => {
         this.setState({ error: '', loading: false });
         console.log(response, 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-        console.log(response.user.photoURL, '&&&&&&&&&&&&&&&&&&&')
-        console.log(response.user,'9999999999999')
-        console.log(response.user.email, '*****')
-        console.log(response.user.uid, 'lllllllllllll')
         // firebase.database().ref('users/' + response.user.uid).set({ image:response.user.image,email: this.state.email, name: this.state.name, uid: response.user.uid })
         console.log(User.image, 'OOOOOOOOOOOOO@@@')
         // console.log(this.state.email)
@@ -53,6 +49,7 @@ export default class MyFront extends Component {
         User.email =this.state.email
         User.name = this.state.name
         User.uid = response.user.uid
+        AsyncStorage.setItem('uid', User.uid)
         // User.image=response.user.image
         this.props.navigation.navigate('Maps');
 
@@ -60,7 +57,8 @@ export default class MyFront extends Component {
       .catch(() => {
         this.setState({ error: this.refs.toast.show('Email/Password SALAH', 500), loading: false });
       })
-
+    // const dataku = await AsyncStorage.getItem('uid')
+    // console.log('ini datakuuuuuuuuuuuuuuuuuuuuu', dataku)
 
     // if (true){
     //   this.setState({error:'', loading:false});

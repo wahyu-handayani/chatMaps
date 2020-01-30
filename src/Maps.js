@@ -21,6 +21,7 @@ import pin2 from './img/marker2.png'
 import User from './User';
 let { width, height } = Dimensions.get('window');
 // import SideBar from './Sidebar';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 0;
@@ -45,13 +46,10 @@ export default class Register extends React.Component {
       mystatus: null,
     };
   }
-
-  closeDrawer() {
-    this._drawer._root.close()
-  };
-  openDrawer() {
-    this._drawer._root.open()
-  };
+  logout= async () =>{
+    await AsyncStorage.removeItem('uid')
+    this.props.navigation.navigate('MyFront')
+  }
 
   async componentDidMount() {
     await permission
@@ -157,11 +155,15 @@ export default class Register extends React.Component {
       //     </Header>
       <View style={styles.container}>
         <Header style={styles.header}>
-          
+          <Left>
+               <Button transparent onPress={() => {this.logout()}}>
+                 <Icon name='close' style={{color: 'blue'}}/>
+               </Button>
+             </Left>
           <Body>
-            <Title style={styles.titleHeader}>Peta Kita</Title>
+            <Title style={{color:'blue', marginLeft:63}}>Peta Kita</Title>
           </Body>
-          
+          <Right />
         </Header>
         <MapView
           ref={(MapView) => { this.MapView = MapView }}

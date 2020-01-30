@@ -19,6 +19,8 @@ import Maps from './src/Maps';
 import Contact from './src/Kontak';
 import Profile from './src/Profile';
 import Chat from './src/Chat';
+import User from './src/User'
+import AsyncStorage from '@react-native-community/async-storage';
 
 /**
  * createStackNavigator
@@ -47,6 +49,12 @@ import Chat from './src/Chat';
 // const App = createAppContainer(Navigator);
 
 // export default App;
+coba=async()=>{
+const dataku = await AsyncStorage.getItem('uid')
+console.log(await AsyncStorage.getItem('uid')) 
+}
+console.log('ini datakuuuuuuuuuuuuuuuuuuuuu', coba()) 
+
 
 const Front = createStackNavigator(
     {
@@ -70,7 +78,7 @@ const Peta = createStackNavigator(
   
   const Kontak = createStackNavigator(
     {
-      Contact
+      Contact,Chat
     },
     {
       headerMode: 'none',
@@ -136,6 +144,7 @@ const Peta = createStackNavigator(
     },
     {
       headerMode: 'none',
+      // initialRouteName: coba()?'Peta':'Front',
       initialRouteName: 'Front', 
     },
   );

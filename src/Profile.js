@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text,TextInput, TouchableOpacity, ActivityIndicator,StyleSheet,Image } from 'react-native'
-import { Drawer, Container, Header, Item, Body, Button, Title } from 'native-base'
+import { Drawer, Container, Header, Item, Body,Icon, Button, Title, Left,Right } from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import User from './User'
-import {Icon} from 'react-native-elements'
+// import {Icon} from 'react-native-elements'
 import firebase from 'firebase'
+import AsyncStorage from '@react-native-community/async-storage';
 // console.log(User,'dddddddddddddd');
 console.log(User.region,'EEEEEEEEEEEEEEEEEEEEE')
 export default class Profile extends Component {
@@ -12,6 +13,10 @@ export default class Profile extends Component {
         name:User.name,
         imageSource: User.image?{uri:User.image}:require('./live-chat.png'),
         upload:false
+    }
+    logout= async () =>{
+    await AsyncStorage.removeItem('uid')
+    this.props.navigation.navigate('MyFront')
     }
     handleChange=key=>val=>{
         this.setState({[key]:val})
@@ -100,10 +105,15 @@ export default class Profile extends Component {
         return (
             <View>
                 <Header style={styles.header}>
-
+                <Left>
+               <Button transparent onPress={() => {this.logout()}}>
+                 <Icon name='close' style={{color: 'blue'}}/>
+               </Button>
+             </Left>
                     <Body>
                         <Title style={styles.titleHeader}>Profile Daku</Title>
                     </Body>
+                    <Right/>
 
                 </Header>
                 <TouchableOpacity onPress={this.changeImage}>
@@ -123,7 +133,7 @@ export default class Profile extends Component {
                 <Button
                     onPress={this.changeName}
                     style={{ marginLeft: 31, backgroundColor:'transparent',borderStyle:'solid',borderColor:'skyblue',borderWidth:2, borderRadius: 10, height: 50, marginBottom: 20, width: 300 }}>
-                    <Text style={{ fontSize: 15, marginLeft: 140 }}>Save</Text>
+                    <Text style={{ fontSize: 15, marginLeft: 130 }}>Save</Text>
                 </Button>
 
             </View>
@@ -142,6 +152,6 @@ const styles = StyleSheet.create({
     titleHeader: {
         color: 'blue',
         fontSize: 18,
-        marginLeft: 120
+        marginLeft: 40
     },
 })
