@@ -10,7 +10,7 @@ console.log(User.region,'EEEEEEEEEEEEEEEEEEEEE')
 export default class Profile extends Component {
     state={
         name:User.name,
-        imageSource: User.image?{uri:User.image}:require('./sukses.jpg'),
+        imageSource: User.image?{uri:User.image}:require('./live-chat.png'),
         upload:false
     }
     handleChange=key=>val=>{
@@ -71,7 +71,7 @@ export default class Profile extends Component {
         })
         .catch(error=>{
             this.setState({
-                upload:false,imageSource:require('./sukses.jpg')
+                upload:false,imageSource:require('./live-chat.png')
             })
             // const ref = firebase.storage().ref('profile_pictures/aa@gmail.com.png');
         // const url = ref.getDownloadUrl();
