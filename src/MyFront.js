@@ -14,10 +14,14 @@ import Toast, { DURATION } from 'react-native-easy-toast'
 export default class MyFront extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', password: '', error: '', loading: false,image:'' };
+    this.state = { name: '', email: '', password: '', error: '', loading: false,image:'', userID: '' };
 
   }
 
+  componentDidMount = () => {
+    this.coba()
+    console.log(User.uid,'......?')
+  }
   onLoginPress(){
     this.setState({ error: '', loading: true });
     // console.ignoredYellowBox = ['Setting a timer'];
@@ -45,11 +49,17 @@ export default class MyFront extends Component {
               console.log(snapshot.hasChild('image'),value.image,'XX1')
               User.image=value.image
             }
+            AsyncStorage.setItem('image', User.image)
+            console.log(User.image,'kk:p')
           })
         User.email =this.state.email
         User.name = this.state.name
         User.uid = response.user.uid
+        console.log(User.image,'s????????????L')
         AsyncStorage.setItem('uid', User.uid)
+        AsyncStorage.setItem('email', User.email)
+        AsyncStorage.setItem('name', User.name)
+        
         // User.image=response.user.image
         this.props.navigation.navigate('Maps');
 
@@ -57,8 +67,8 @@ export default class MyFront extends Component {
       .catch(() => {
         this.setState({ error: this.refs.toast.show('Email/Password SALAH', 500), loading: false });
       })
-    // const dataku = await AsyncStorage.getItem('uid')
-    // console.log('ini datakuuuuuuuuuuuuuuuuuuuuu', dataku)
+    // const dataku = await AsyncStorage.getItem('image')
+    // console.log('aBBBBBBBBBBBBBBB', dataku)
 
     // if (true){
     //   this.setState({error:'', loading:false});
@@ -90,10 +100,8 @@ export default class MyFront extends Component {
     if (this.state.loading) {
       return this.refs.toast.show('Tunggu, sedang loading')
     }
-
+    
     return <View>
-
-
       <TouchableOpacity style={styles.buttonStyle} onPress={this.onLoginPress.bind(this)}>
         <Text style={styles.textSignup}>Login</Text>
       </TouchableOpacity>
@@ -105,7 +113,21 @@ export default class MyFront extends Component {
 
     </View>
   }
+
+  coba = async () => {
+     const userID =  await AsyncStorage.getItem('uid')
+     this.setState({
+       userID
+     })
+     
+   }
+
   render() {
+   
+    const { userID } = this.state
+    User.uid=userID
+    console.log(User.uid,'lwwwwwwwwwwwwwwwwwwwkj@@')
+    User.uid ? this.props.navigation.navigate('Peta') : this.props.navigation.navigate('Login')
     return (
 
       <View style={styles.container}>

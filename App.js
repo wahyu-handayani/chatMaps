@@ -50,11 +50,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 // export default App;
 coba=async()=>{
-const dataku = await AsyncStorage.getItem('uid')
-console.log(await AsyncStorage.getItem('uid')) 
+  User.uid = await AsyncStorage.getItem('uid')
+  return console.log(User.uid,'ljjjjjjjjjjjjjjj') 
 }
-console.log('ini datakuuuuuuuuuuuuuuuuuuuuu', coba()) 
-
+// console.log('ini datakuuuuuuuuuuuuuuuuuuuuu', coba()) 
+console.log(User.uid,'hhh')
 
 const Front = createStackNavigator(
     {
@@ -90,7 +90,8 @@ const Peta = createStackNavigator(
   
   const MyProfile = createStackNavigator(
     {
-      Profile
+      Profile,
+
     },
     {
       headerMode: 'none',
@@ -140,11 +141,12 @@ const Peta = createStackNavigator(
   
   const Router = createSwitchNavigator(
     {
-      RouteUser,Front,Peta
+      Front,
+      RouteUser
     },
     {
       headerMode: 'none',
-      initialRouteName: coba()?'Peta':'Front',
+      initialRouteName: 'Front',
       // initialRouteName: 'Front', 
     },
   );

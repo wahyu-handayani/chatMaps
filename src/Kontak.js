@@ -5,16 +5,22 @@ import firebase from './config'
 import { FlatList, TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
 import { Drawer, Container, Header, Item, Body, Button, Icon, Title, Left, Right } from 'native-base'
 import AsyncStorage from '@react-native-community/async-storage';
-
+console.log(User.name,User.email,User.region,User.image,'<<<<<<<<<<')
 export default class Kontak extends React.Component {
   state = {
     users: []
   }
   logout= async () =>{
     await AsyncStorage.removeItem('uid')
+    await AsyncStorage.removeItem('name')
+    await AsyncStorage.removeItem('email')
+    await AsyncStorage.removeItem('image')
     this.props.navigation.navigate('MyFront')
   }
-  componentWillMount() {
+  componentWillMount=async()=>{
+    User.name=await AsyncStorage.getItem('name')
+    User.email=await AsyncStorage.getItem('email')
+    console.log(User.name,'//////////////')
     let dbRef = firebase.database().ref('users')
     dbRef.on('child_added', (val) => {
       let person = val.val();

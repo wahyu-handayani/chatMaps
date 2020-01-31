@@ -7,21 +7,39 @@ import User from './User'
 import firebase from 'firebase'
 import AsyncStorage from '@react-native-community/async-storage';
 // console.log(User,'dddddddddddddd');
-console.log(User.region,'EEEEEEEEEEEEEEEEEEEEE')
+console.log(User.name,User.email,'gffEEEEEEEEEEEEEEEEEEEEEf')
+// coba=async()=>{
+//     User.name=await AsyncStorage.getItem('name')
+//     User.email=await AsyncStorage.getItem('email')
+// }
+
 export default class Profile extends Component {
     state={
-        name:User.name,
-        imageSource: User.image?{uri:User.image}:require('./live-chat.png'),
+        name:'',email:'',
+        imageSource: '',
         upload:false
     }
     logout= async () =>{
     await AsyncStorage.removeItem('uid')
+    await AsyncStorage.removeItem('name')
+    await AsyncStorage.removeItem('email')
+    await AsyncStorage.removeItem('image')
     this.props.navigation.navigate('MyFront')
     }
     handleChange=key=>val=>{
         this.setState({[key]:val})
     }
-    changeName=async()=>{
+    componentDidMount(){
+        this.coba()
+    }
+    coba=async()=>{
+        User.name=await AsyncStorage.getItem('name')
+        User.email=await AsyncStorage.getItem('email')
+        User.image=await AsyncStorage.getItem('image')
+        this.setState({name:User.name,email:User.email,imageSource:User.image?{uri:User.image}:require('./live-chat.png')})
+        console.log(User.name,this.state.name,this.state.email,'jnnn')
+    }
+    changeName(){
         if (this.state.name.length<3) alert('salah')
         else if(User.name!==this.state.name){
         // firebase.database().ref('users').child(User.uid).set({name:this.state.name,email:User.email,region:User.region})
@@ -67,6 +85,7 @@ export default class Profile extends Component {
     }
     uploadFile=async()=>{
         const file=await this.uriToBlob(this.state.imageSource.uri)
+        console.log(User.email,'EMAILL')
         firebase.storage().ref(`profile_pictures/${User.email}.png`)
         .put(file)
         .then(snapshot=>snapshot.ref.getDownloadURL())
@@ -101,7 +120,8 @@ export default class Profile extends Component {
     }
 
     render() {
-        console.log(User.region,'EEEEEEEEEEEEEEEEEEEEE')
+        console.log(User.name,this.state.name,'ccEEEEEEEEEEEEEEEEEEEEE')
+        const {email}=this.state
         return (
             <View>
                 <Header style={styles.header}>
@@ -128,7 +148,7 @@ export default class Profile extends Component {
                     style={{ marginTop:15,marginLeft: 31, backgroundColor:'skyblue',borderStyle:'solid',borderRadius: 10, height: 50, marginBottom: 20, width: 300 }}/>
                 <Item
                     style={{ marginLeft: 31, backgroundColor:'skyblue',borderStyle:'solid', borderRadius: 10, height: 50, marginBottom: 20, width: 300 }}>
-                    <Text style={{ fontSize: 15, marginLeft: 20 }}>Email: {User.email}</Text>
+                    <Text style={{ fontSize: 15, marginLeft: 20 }}>Email: {this.state.email}</Text>
                 </Item>
                 <Button
                     onPress={this.changeName}

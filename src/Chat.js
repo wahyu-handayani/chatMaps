@@ -102,7 +102,7 @@ export default class Chat extends Component {
             <View>
                 <Header style={styles.header}>
                  <Left>
-               <Button transparent onPress={() => {this.props.navigation.navigate('Kontak')}}>
+               <Button transparent onPress={() => {this.props.navigation.navigate('Contact')}}>
                  <Icon name='ios-arrow-back' style={{color: 'blue'}}/>
                </Button>
              </Left>

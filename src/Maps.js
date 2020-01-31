@@ -29,7 +29,7 @@ const LONGITUDE = 0;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-export default class Register extends React.Component {
+export default class Maps extends React.Component {
 
   constructor(props) {
     super(props);
@@ -48,11 +48,15 @@ export default class Register extends React.Component {
   }
   logout= async () =>{
     await AsyncStorage.removeItem('uid')
+    await AsyncStorage.removeItem('name')
+    await AsyncStorage.removeItem('email')
+    await AsyncStorage.removeItem('image')
     this.props.navigation.navigate('MyFront')
   }
 
   async componentDidMount() {
     await permission
+    // console.disableYellowBox = true;
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this._getDataFriends(user.uid)
@@ -104,9 +108,11 @@ export default class Register extends React.Component {
       
       // let position=person.uid===User.uid?User.region=person.region:'SALAH'
       // console.log(position,'SSAAAAAAAAAAAAAAAAAAAAAA')
+      console.log(result,uid,result.key,':::::')
       person.uid = result.key;
       if (person.uid !== uid) {
         this.setState((prevState) => {
+          console.log(prevState.users,'PREVSTATE')
           return {
             users: [...prevState.users, person]
           }
