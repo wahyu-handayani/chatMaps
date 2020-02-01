@@ -133,7 +133,6 @@ export default class MyFront extends Component {
       <View style={styles.container}>
 
         <Image style={{ marginBottom: 40, width: 300, height: 150 }} source={require('./welcome.png')} />
-        {/* <Image style={{marginBottom:50, width:30, height:30}} source={require('./live-chat.png')} /> */}
 
         <TextInput
           style={styles.textInput}

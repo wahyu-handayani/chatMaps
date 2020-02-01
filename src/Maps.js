@@ -97,19 +97,20 @@ export default class Maps extends React.Component {
       let person = result.val();
       console.log(person,person.uid===User.uid,'PERSOOOOOOOOOOOOOOOOOOOOOOOOOOOOON')
       console.log(result.val().uid,'HUUFFFFFFFFF')
-      User.region=person.region
+      // User.region=person.region
       // if(person.uid===User.uid) {
       //   User.region=result.val().region
       // console.log(User.region,'BISMILLAH')
       // }
       
-      // let position=person.uid===User.uid?User.region=person.region:'SALAH'
+      person.uid===User.uid?User.region=person.region:console.log('salah')
+      console.log(person.region,User.region,']]]]]]]]')
       // console.log(position,'SSAAAAAAAAAAAAAAAAAAAAAA')
       console.log(result,uid,result.key,':::::')
       person.uid = result.key;
       if (person.uid !== uid) {
         this.setState((prevState) => {
-          console.log(prevState.users,'PREVSTATE')
+          console.log(prevState,prevState.users,'PREVSTATE')
           return {
             users: [...prevState.users, person]
           }
