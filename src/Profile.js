@@ -3,19 +3,13 @@ import { View, Text,TextInput, TouchableOpacity, ActivityIndicator,StyleSheet,Im
 import { Drawer, Container, Header, Item, Body,Icon, Button, Title, Left,Right } from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import User from './User'
-// import {Icon} from 'react-native-elements'
 import firebase from 'firebase'
 import AsyncStorage from '@react-native-community/async-storage';
-// console.log(User,'dddddddddddddd');
-console.log(User.name,User.email,'gffEEEEEEEEEEEEEEEEEEEEEf')
-// coba=async()=>{
-//     User.name=await AsyncStorage.getItem('name')
-//     User.email=await AsyncStorage.getItem('email')
-// }
+
 
 export default class Profile extends Component {
     state={
-        name:'',email:'',
+        name:User.name,email:'',uid:'',
         imageSource: '',
         upload:false
     }
@@ -24,7 +18,8 @@ export default class Profile extends Component {
     await AsyncStorage.removeItem('name')
     await AsyncStorage.removeItem('email')
     await AsyncStorage.removeItem('image')
-    this.props.navigation.navigate('MyFront')
+    firebase.auth().signOut() &&
+    this.props.navigation.push('MyFront');
     }
     handleChange=key=>val=>{
         this.setState({[key]:val})
@@ -36,10 +31,18 @@ export default class Profile extends Component {
         User.name=await AsyncStorage.getItem('name')
         User.email=await AsyncStorage.getItem('email')
         User.image=await AsyncStorage.getItem('image')
-        this.setState({name:User.name,email:User.email,imageSource:User.image?{uri:User.image}:require('./live-chat.png')})
+        User.uid=await AsyncStorage.getItem('uid')
+        this.setState({
+            name:User.name,
+            email:User.email,
+            imageSource:User.image?{uri:User.image}:require('./live-chat.png'),
+            uid:User.uid
+        })
         console.log(User.name,this.state.name,this.state.email,'jnnn')
+        console.log(User.name,User.email,User.image,'mm.;')
     }
     changeName(){
+        console.log(User.name,this.state.name,'?/')
         if (this.state.name.length<3) alert('salah')
         else if(User.name!==this.state.name){
         // firebase.database().ref('users').child(User.uid).set({name:this.state.name,email:User.email,region:User.region})
@@ -70,6 +73,7 @@ export default class Profile extends Component {
     }
 
     updateUser=()=>{
+        console.log(User.uid,User,'VVV...')
         firebase.database().ref('users').child(User.uid).set(User)
         // const ref = firebase.storage().ref('profile_pictures/aa@gmail.com.png');
         // const url = ref.getDownloadUrl();
@@ -120,8 +124,8 @@ export default class Profile extends Component {
     }
 
     render() {
-        console.log(User.name,this.state.name,'ccEEEEEEEEEEEEEEEEEEEEE')
-        const {email}=this.state
+        const {name}=this.state
+        console.log(User.name,this.state.name,typeof({name}),name,{name},'cccEEEEEEEEEEEEEEEEEEEEE')
         return (
             <View>
                 <Header style={styles.header}>
@@ -151,7 +155,7 @@ export default class Profile extends Component {
                     <Text style={{ fontSize: 15, marginLeft: 20 }}>Email: {this.state.email}</Text>
                 </Item>
                 <Button
-                    onPress={this.changeName}
+                    onPress={this.changeName.bind(this)}
                     style={{ marginLeft: 31, backgroundColor:'transparent',borderStyle:'solid',borderColor:'skyblue',borderWidth:2, borderRadius: 10, height: 50, marginBottom: 20, width: 300 }}>
                     <Text style={{ fontSize: 15, marginLeft: 130 }}>Save</Text>
                 </Button>

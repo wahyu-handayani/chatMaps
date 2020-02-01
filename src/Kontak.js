@@ -15,7 +15,8 @@ export default class Kontak extends React.Component {
     await AsyncStorage.removeItem('name')
     await AsyncStorage.removeItem('email')
     await AsyncStorage.removeItem('image')
-    this.props.navigation.navigate('MyFront')
+    firebase.auth().signOut() &&
+    this.props.navigation.push('MyFront');
   }
   componentWillMount=async()=>{
     User.name=await AsyncStorage.getItem('name')
@@ -99,4 +100,3 @@ const styles = StyleSheet.create({
     marginLeft: 83
   },
 })
-

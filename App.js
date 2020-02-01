@@ -19,8 +19,7 @@ import Maps from './src/Maps';
 import Contact from './src/Kontak';
 import Profile from './src/Profile';
 import Chat from './src/Chat';
-import User from './src/User'
-import AsyncStorage from '@react-native-community/async-storage';
+import SplashScreen from './src/SplashScreen'
 
 /**
  * createStackNavigator
@@ -49,12 +48,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 // const App = createAppContainer(Navigator);
 
 // export default App;
-coba=async()=>{
-  User.uid = await AsyncStorage.getItem('uid')
-  return console.log(User.uid,'ljjjjjjjjjjjjjjj') 
-}
-// console.log('ini datakuuuuuuuuuuuuuuuuuuuuu', coba()) 
-console.log(User.uid,'hhh')
+
 
 const Front = createStackNavigator(
     {
@@ -141,12 +135,13 @@ const Peta = createStackNavigator(
   
   const Router = createSwitchNavigator(
     {
+      SplashScreen,
       Front,
       RouteUser
     },
     {
       headerMode: 'none',
-      initialRouteName: 'Front',
+      initialRouteName: 'SplashScreen',
       // initialRouteName: 'Front', 
     },
   );

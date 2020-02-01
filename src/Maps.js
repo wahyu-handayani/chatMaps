@@ -46,12 +46,9 @@ export default class Maps extends React.Component {
       mystatus: null,
     };
   }
-  logout= async () =>{
-    await AsyncStorage.removeItem('uid')
-    await AsyncStorage.removeItem('name')
-    await AsyncStorage.removeItem('email')
-    await AsyncStorage.removeItem('image')
-    this.props.navigation.navigate('MyFront')
+  logout(){
+    firebase.auth().signOut() &&
+    this.props.navigation.push('MyFront');
   }
 
   async componentDidMount() {

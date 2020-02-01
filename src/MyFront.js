@@ -127,7 +127,7 @@ export default class MyFront extends Component {
     const { userID } = this.state
     User.uid=userID
     console.log(User.uid,'lwwwwwwwwwwwwwwwwwwwkj@@')
-    User.uid ? this.props.navigation.navigate('Peta') : this.props.navigation.navigate('Login')
+    // User.uid ? this.props.navigation.navigate('Peta') : this.props.navigation.navigate('Login')
     return (
 
       <View style={styles.container}>
